@@ -3,7 +3,7 @@
 
 # Look for a package.json SOMEWHERE
 
-if [ -f $1/package.json || .node ]; then
+if [ -f $1/package.json -o -f .node ]; then
   echo "Node.js" && exit 0
 else
   echo "no" && exit 1
