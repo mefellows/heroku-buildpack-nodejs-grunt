@@ -19,7 +19,7 @@ source $bp_dir/bin/common.sh
 trap cat_npm_debug_log ERR
 
 # Set build dir if not the default base directory
-if [ -f .node ]; then
+if [ -f $1/.node ]; then
   grunt_dir="$build_dir/$(cat .node)"
   echo "Detecting custom grunt dir: $grunt_dir"
 fi
