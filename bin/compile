@@ -137,6 +137,9 @@ status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
 
+# Install Compass
+gem install compass
+
 # Check and run Grunt
 (
   if [ -f $grunt_dir/grunt.js ] || [ -f $grunt_dir/Gruntfile.js ] || [ -f $grunt_dir/Gruntfile.coffee ]; then
@@ -146,7 +149,6 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
       export_env_dir $env_dir
     fi
 
-
     # make sure that grunt and grunt-cli are installed locally
     npm install grunt-cli
     npm install grunt
@@ -155,6 +157,7 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
     ls -larth | indent
     cat .bowerrc
 
+    # http://stackoverflow.com/questions/22367837/what-is-causing-grunt-serve-to-throw-no-bower-components-found
     # https://github.com/stephenplusplus/grunt-wiredep/issues/71
     echo "-----> Found Gruntfile, running bower install"
     $grunt_dir/node_modules/.bin/bower install
