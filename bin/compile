@@ -104,7 +104,7 @@ fi
   # npm install --userconfig $grunt_dir/.npmrc --production 2>&1 | indent
 
   # Install dev dependencies as we are BUILDING shit here...
-  npm install --userconfig $grunt_dir/.npmrc --production 2>&1 | indent
+  npm install --userconfig $grunt_dir/.npmrc 2>&1 | indent
 )
 
 # Persist goodies like node-version in the slug
