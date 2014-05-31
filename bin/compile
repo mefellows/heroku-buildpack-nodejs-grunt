@@ -150,10 +150,12 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
     # make sure that grunt and grunt-cli are installed locally
     npm install grunt-cli
     npm install grunt
+    npm install bower
     echo "About to run grunt, what's in here?"
     ls -larth | indent
     cat .bowerrc
 
+    # https://github.com/stephenplusplus/grunt-wiredep/issues/71
     echo "-----> Found Gruntfile, running bower install"
     $grunt_dir/node_modules/.bin/bower install
 
