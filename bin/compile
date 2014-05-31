@@ -153,8 +153,12 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
     echo "About to run grunt, what's in here?"
     ls -larth | indent
     cat .bowerrc
+
+    echo "-----> Found Gruntfile, running bower install"
+    $grunt_dir/node_modules/.bin/bower install
+
     echo "-----> Found Gruntfile, running grunt heroku:$NODE_ENV task"
-    $grunt_dir/node_modules/.bin/grunt heroku #:$NODE_ENV
+    $grunt_dir/node_modules/.bin/grunt heroku
   else
     echo "-----> No Gruntfile (grunt.js, Gruntfile.js, Gruntfile.coffee) found"
   fi
