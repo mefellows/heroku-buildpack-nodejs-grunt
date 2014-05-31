@@ -99,6 +99,11 @@ fi
 
   status "Installing dependencies"
   # Make npm output to STDOUT instead of its default STDERR
+
+  # Production only??
+  # npm install --userconfig $grunt_dir/.npmrc --production 2>&1 | indent
+
+  # Install dev dependencies as we are BUILDING shit here...
   npm install --userconfig $grunt_dir/.npmrc --production 2>&1 | indent
 )
 
