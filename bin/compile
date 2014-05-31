@@ -146,13 +146,13 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
       export_env_dir $env_dir
     fi
 
-    echo "About to install and run grunt, what's in here?"
-    ls -larth | indent
-
 
     # make sure that grunt and grunt-cli are installed locally
     npm install grunt-cli
     npm install grunt
+    echo "About to run grunt, what's in here?"
+    ls -larth | indent
+    cat .bowerrc
     echo "-----> Found Gruntfile, running grunt heroku:$NODE_ENV task"
     $grunt_dir/node_modules/.bin/grunt heroku #:$NODE_ENV
   else
