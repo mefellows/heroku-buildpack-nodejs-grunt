@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-# Look for a package.json SOMEWHERE
-
-if [ -f $1/package.json -o -f $1/.node ]; then
+# Consider use of environment variable to avoid YA .dotfile
+if [ -f $1/package.json -o -f $1/.node -o "$NODE_BUILDPACK_DIR" != "" ]; then
   echo "Node.js" && exit 0
 else
   echo "no" && exit 1

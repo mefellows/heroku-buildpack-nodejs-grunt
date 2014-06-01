@@ -21,7 +21,11 @@ trap cat_npm_debug_log ERR
 # Set build dir if not the default base directory
 if [ -f $1/.node ]; then
   grunt_dir="$build_dir/$(cat $1/.node)"
-  echo "Detecting custom grunt dir: $grunt_dir"
+  echo "-----> Detected custom grunt execution directory: $grunt_dir"
+fi
+if [ "$NODE_BUILDPACK_DIR" != "" ]; then
+  grunt_dir="$build_dir/$NODE_BUILDPACK_DIR"
+  echo "-----> Detected custom grunt execution directory: $grunt_dir"
 fi
 
 # Look in package.json's engines.node field for a semver range
@@ -132,20 +136,17 @@ status "Cleaning up node-gyp and npm artifacts"
 rm -rf "$build_dir/.node-gyp"
 rm -rf "$build_dir/.npm"
 
-
 # install compass
 status "Installing Compass"
 export GEM_HOME=$build_dir/.gem/ruby/1.9.1
 PATH="$GEM_HOME/bin:$PATH"
 
-
-
 if test -d $cache_dir/ruby/.gem; then
-status "Restoring ruby gems directory from cache"
+  status "Restoring ruby gems directory from cache"
   cp -r $cache_dir/ruby/.gem $build_dir
   HOME=$build_dir gem update compass --user-install --no-rdoc --no-ri
 else
-HOME=$build_dir gem install compass --user-install --no-rdoc --no-ri
+  HOME=$build_dir gem install compass --user-install --no-rdoc --no-ri
 fi
 
 # cache ruby gems compass
@@ -154,7 +155,7 @@ mkdir -p $cache_dir/ruby
 
 # If app has a gems directory, cache it.
 if test -d $build_dir/.gem; then
-status "Caching ruby gems directory for future builds"
+  status "Caching ruby gems directory for future builds"
   cp -r $build_dir/.gem $cache_dir/ruby
 fi
 
@@ -178,17 +179,16 @@ echo "export PATH=\"\$HOME/bin:\$HOME/vendor/bundle/bin:\$HOME/vendor/bundle/rub
     npm install grunt-cli
     npm install grunt
     npm install bower
-    echo "About to run grunt, what's in here?"
-    ls -larth | indent
-    cat .bowerrc
 
     # http://stackoverflow.com/questions/22367837/what-is-causing-grunt-serve-to-throw-no-bower-components-found
     # https://github.com/stephenplusplus/grunt-wiredep/issues/71
-    echo "-----> Found Gruntfile, running bower install"
-    $grunt_dir/node_modules/.bin/bower install
+    if [ -f $grunt_dir/.bowerrc ]; then
+      echo "-----> Found Bower Configuration file, running bower install"
+      $grunt_dir/node_modules/.bin/bower install
+    fi
 
     echo "-----> Found Gruntfile, running grunt heroku:$NODE_ENV task"
-    $grunt_dir/node_modules/.bin/grunt heroku
+    $grunt_dir/node_modules/.bin/grunt heroku:$NODE_ENV
   else
     echo "-----> No Gruntfile (grunt.js, Gruntfile.js, Gruntfile.coffee) found"
   fi
