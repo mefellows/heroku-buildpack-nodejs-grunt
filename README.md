@@ -18,7 +18,31 @@ You will generally want to use this in conjunction with another build pack, if y
 
       heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
       echo 'public' > .node
+
+vi .buildpacks:
       
+      https://github.com/heroku/heroku-buildpack-ruby.git
+      https://github.com/mefellows/heroku-buildpack-nodejs-grunt
+
+vi public/Gruntfile.js:
+
+    grunt.registerTask('heroku', [
+        'clean:dist',
+        'bowerInstall',
+        'useminPrepare',
+        'concurrent:dist',
+        'autoprefixer',
+        'concat',
+        'ngmin',
+        'copy:dist',
+        'cdnify',
+        'cssmin',
+        'uglify',
+        'rev',
+        'usemin',
+        'htmlmin',
+        'copy:ruby'
+    ]);
 
 ## Ruby Build Pack example
 
