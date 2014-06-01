@@ -6,8 +6,8 @@ Run Grunt and Bower on Heroku during slug compilation.
 
 Do you...
 
-* Run a Web application on Heroku and have your Angular/Ember/<Insert JS framework here> placed in a sub-directory because you're a OCD neat freak? 
-* Have the JS framework in a sub-directory because you're a OCD neat freak?
+* Run a Web application on Heroku and bundle a JavaScript framework such as AngularJS ?
+* Have the JS framework placed in a sub-directory because you're a OCD neat freak?
 * Want to be able to compile static resources during the slug compilation rather than commit into Git?
 
 Then this might be what you're looking for.
